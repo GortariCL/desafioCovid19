@@ -349,7 +349,8 @@ $(document).ready(function () {
             animationEnabled: true,
             legend: {
                 cursor: "pointer",
-                verticalAlign: "top"
+                verticalAlign: "top",
+                itemclick: toggleDataSeries
             },
             colorSet: "charContainer3",
             toolTip: {
@@ -379,6 +380,15 @@ $(document).ready(function () {
             ]
         });
         chart.render();
+        function toggleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            }
+            else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
     }
 
     //Eventos Botones
