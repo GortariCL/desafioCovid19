@@ -1,0 +1,149 @@
+<!--/* 1. Crear una estructura básica con HTML para el proyecto y cargar la librería de
+bootstrap o similar, además de jQuery. (1 Punto)*/-->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Fernando Javier Perez Gortari">
+    <title>Hito 2 • Covid 19</title>
+    <!--JQuery 3.6.0-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!--Bootstrap 5.1.3-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!--CSS Stylesheet-->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Covid19</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a id="home-btn" class="nav-link" type="button" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="iniciar-sesion" class="nav-link toggle-btn" type="button" style="display: block"
+                            data-bs-toggle="modal" data-bs-target="#modalInicioSesion">Iniciar Sesion</a>
+                    </li>
+                    <li>
+                        <a id="situacionChile-btn" type="button" class="nav-link toggle-btn" style="display: none">Situación Chile</a>
+                    </li>
+                    <li>
+                        <a id="logout" class="nav-link toggle-btn" type="button" style="display: none">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!---Inicio Situación Mundial-->
+    <section id="situacion-mundial" class="container" style="display: block">
+        <div class="justify-content-center align-items-center p-5" id="principal-div">
+            <div class="titulo">
+                <h1 class="h3 text-center">Países con Covid19</h1>
+            </div>
+            <div id="chartContainer" style="height: 300px; width: 100%;">
+            </div>
+        </div>
+
+        <div class="col-md-12" id="jwt-tabla-div">
+            <table class="table" id="jwt-tabla-post">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Ubicacion</th>
+                        <th scope="col">Activos</th>
+                        <th scope="col">Confirmados</th>
+                        <th scope="col">Fallecidos</th>
+                        <th scope="col">Recuperados</th>
+                        <th scope="col">Detalles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalInicioSesion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="pt-3 d-block bg-dark text-light">
+                    <h5 class="text-center" id="exampleModalLabel">Iniciar Sesion</h5>
+                    <hr class="w-50 d-block m-auto">
+                </div>
+                <div class="modal-body bg-dark text-light">
+                    <form action="" id="submitForm">
+                        <div class="form-group text-center pb-1">
+                            <label for="username" id="usernameLabel" class="">Correo:</label>
+                            <input id="username" type="email" class="form-control w-75 m-auto bg-dark text-light" placeholder="Ingrese su correo">
+                            <p id="errUser" class="text-danger w-75 m-auto"></p>
+                        </div>
+                        <div class="form-group text-center">
+                            <label for="password" id="userPass" class="">Contraseña:</label>
+                            <input id="password" type="password" class="form-control w-75 m-auto bg-dark text-light" placeholder="Ingrese su contraseña">
+                            <p id="errPass" class="text-danger w-75 m-auto"></p>
+                        </div>
+                        <div class="pb-3">
+                            <button id="submit-btn" type="submit" class="btn btn-outline-light d-block m-auto mt-4 toogle-btn">Ingresar</button>
+                        </div>
+                    </form>                  
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fin Sección Situación Mundial-->
+
+    <!---Inicio Situación Chile-->
+    <section id="situacion-chile" class="container" style="display: none">
+        <div class="justify-content-center align-items-center p-5" id="principal-div">
+            <div class="titulo">
+                <h1 class="h3 text-center">Situación Chile</h1>
+                
+            </div>
+            <div class="text-center mt-5">
+                <div id="chartContainer3" style="height: 300px; width: 100%;">
+                    <span class="loader"></span>
+                </div>   
+            </div>
+        </div>
+    </section>
+    <!--Fin Sección Situación Chile-->
+
+    <!--PopperJS 2.10.2-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <!--Bootstrap 5.1.3-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+    <!--ChartJS-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"
+        integrity="sha256-ErZ09KkZnzjpqcane4SCyyHsKAXMvID9/xwbl/Aq1pc=" crossorigin="anonymous"></script>
+    <!--CanvasJS-->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <!--Script JS-->
+    <script src="./assets/js/scripts.js"></script>
+</body>
+
+</html>
